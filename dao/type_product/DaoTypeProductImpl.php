@@ -22,7 +22,7 @@ class DaoTypeProductImpl implements IDaoTypeProduct{
 
         try {
             Log::write("INCIANDO CONSULTA DE TYPO PRODUCTO","SELECT");
-            $query = "SELECT * FROM typeProduct ORDER BY ID_TYPE_PRODUCT DESC";
+            $query = "SELECT ID_TYPE_PRODUCT,name,idStatus,creationDate FROM typeProduct ORDER BY ID_TYPE_PRODUCT DESC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
             $result = $execute->fetchAll(PDO::FETCH_ASSOC);
@@ -36,6 +36,22 @@ class DaoTypeProductImpl implements IDaoTypeProduct{
         }
     }
     public function getByID($id){
+
+        try{
+
+            Log::write("INICIANDO CONSULTA DE TYPE PRODUCT","SELECT");
+            $query = "SELECT ID_TYPE_PRODUCT,name,idStatus,creationDate FROM typeProduct WHERE ID_TYPE_PRODUCT=?";
+            $args=array($id);
+            $execute = $this->connection->getConnection()->prepare($query);
+            $execute->execute($args);
+            $result = $execute->fetchAll(PDO::FETCH_ASSOC);
+            Log::write("TERMINO CONSULTA EXITOSAMENTE","INFO");
+            return $result;
+        }catch(PDOException $e){
+            Log::write("dao\type_product\DaoTypeProductImpl","ERROR");
+            Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+            return null;
+        }
 
     }
     public function save($entidad):int{
