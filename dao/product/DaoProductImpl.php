@@ -32,7 +32,7 @@ class DaoProductImpl implements IDaoProduct
 
 			Log::write("dao\product\DaoProductImpl", "ERROR");
 			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
-			return "DATOS NO DISPONIBLE";
+			return array();
 		}
 	}
 
@@ -50,7 +50,7 @@ class DaoProductImpl implements IDaoProduct
 		}catch(PDOException $e){
 			Log::write("dao\product\DaoProductImpl","ERROR");
 			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
-			return null;
+			return array();
 		}
 	}
 
