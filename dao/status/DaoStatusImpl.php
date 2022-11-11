@@ -18,7 +18,7 @@ class DaoStatusImpl implements IDaoStatus{
 	public function getAll()
 	{
 		try {
-			Log::write("INICIANDO CONSULTA DE PRODUCTOS", "SELECT");
+			Log::write("INICIANDO CONSULTA DE PRODUCTOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
 			$query = "SELECT ID_STATUS,name from status order by ID_STATUS desc";
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
@@ -38,7 +38,7 @@ class DaoStatusImpl implements IDaoStatus{
 	public function getByID($id){
 		
 		try{
-            Log::write("INICIANDO BUSQUEDA POR ID","SELECT");
+            Log::write("INICIANDO BUSQUEDA POR ID | ".__NAMESPACE__." | ".basename(__FILE__),"SELECT");
 			$query = "SELECT ID_STATUS,name from product WHERE ID_STATUS=?";
 			$args=array($id);
 			$execute=$this->connection->getConnection()->prepare($query);
@@ -57,7 +57,7 @@ class DaoStatusImpl implements IDaoStatus{
 	public function save($entidad): int{
 
         try{
-            Log::write("INICIANDO GUARDADO DE DATOS", "INSERT");
+            Log::write("INICIANDO GUARDADO DE DATOS | ".basename(__FILE__), "INSERT");
             $query = "INSERT INTO status (name) VALUES(?)";
             $args = array($entidad->name);
             $execute = $this->connection->getConnection()->prepare($query);
@@ -85,7 +85,7 @@ class DaoStatusImpl implements IDaoStatus{
 		
         try{
 
-            Log::write("ACTUALIZACION DE DATOS","UPDATE");
+            Log::write("ACTUALIZACION DE DATOS | ".basename(__FILE__),"UPDATE");
             $query = "UPDATE status SET name = ? WHERE ID_STATUS = ?";
             $args = array($entidad->name,$entidad->idProducto);
             $execute = $this->connection->getConnection()->prepare($query);

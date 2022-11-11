@@ -19,8 +19,8 @@ class DaoProductImpl implements IDaoProduct
 	public function getAll()
 	{
 		try {
-			Log::write("INICIANDO CONSULTA DE PRODUCTOS", "SELECT");
-			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,status from product order by ID_PRODUCT desc";
+			Log::write("INICIANDO CONSULTA DE PRODUCTOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
+			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,idStatus from product order by ID_PRODUCT desc";
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
 
@@ -37,9 +37,9 @@ class DaoProductImpl implements IDaoProduct
 	}
 
 	public function getByID($id){
-		Log::write("Iniciando busqueda","SELECT");
+		Log::write("Iniciando busqueda | ".__NAMESPACE__." | ".basename(__FILE__),"SELECT");
 		try{
-			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,status from product WHERE ID_PRODUCT=?";
+			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,idStatus from product WHERE ID_PRODUCT=?";
 			$args=array($id);
 			$execute=$this->connection->getConnection()->prepare($query);
 			$execute->execute($args);

@@ -6,6 +6,7 @@ use dao\connection\IConnection;
 use PDOException;
 use util\Log;
 use PDO;
+use dao\department\IDaoDepartment;
 
 class DaoDepartmentImpl implements IDaoDepartment{
 
@@ -19,7 +20,7 @@ class DaoDepartmentImpl implements IDaoDepartment{
     public function getAll(){
 
         try {
-            Log::write("INICIO DE CONSULTA DE BUSQUEDA", "SELECT");
+            Log::write("INICIO DE CONSULTA DE BUSQUEDA | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
             $query = "SELECT ID_DEPARTMENT,name,idStatus,creationDate FROM deparment ORDER BY ID_DEPARTMENT DESC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
@@ -35,7 +36,7 @@ class DaoDepartmentImpl implements IDaoDepartment{
     public function getByID($id){
 
         try {
-            Log::write("INICIO DE CONSULTA POR ID", "SELECT");
+            Log::write("INICIO DE CONSULTA POR ID | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
             $query = "SELECT ID_DEPARTMENT,name,idStatus,creationDate FROM deparment WHERE ID_DEPARTMENT=?";
             $args=array($id);
 

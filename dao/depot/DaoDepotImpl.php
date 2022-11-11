@@ -19,7 +19,7 @@ class DaoDepotImpl implements IDaoDepot
     public function getAll()
     {
         try {
-            Log::write("INICIO DE CONSULTA DE BUSQUEDA", "SELECT");
+            Log::write("INICIO DE CONSULTA DE BUSQUEDA | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
             $query = "SELECT ID_DEPOT,branchName,location,idStatus FROM depot ORDER BY ID_DEPOT DESC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
@@ -36,7 +36,7 @@ class DaoDepotImpl implements IDaoDepot
     {
 
         try {
-            Log::write("INICIO DE CONSULTA POR ID", "SELECT");
+            Log::write("INICIO DE CONSULTA POR ID | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
             $query = "SELECT ID_DEPOT,branchName,location,idStatus FROM depot WHERE ID_DEPOT=?";
             $args=array($id);
 
