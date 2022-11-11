@@ -1,0 +1,13 @@
+# IGNORAR NODE_MODULES
+
+node_modules
+
+# IGNORAR CONFIGURACIONES JSON
+package-lock.json
+package.json
+vendor
+composer.json
+composer.lock
+log.txt
+.vscode
+.env
