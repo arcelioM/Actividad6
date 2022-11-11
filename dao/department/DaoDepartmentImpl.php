@@ -34,6 +34,22 @@ class DaoDepartmentImpl implements IDaoDepartment{
     }
     public function getByID($id){
 
+        try {
+            Log::write("INICIO DE CONSULTA POR ID", "SELECT");
+            $query = "SELECT ID_DEPARTMENT,name,idStatus,creationDate FROM deparment WHERE ID_DEPARTMENT=?";
+            $args=array($id);
+
+            $execute = $this->connection->getConnection()->prepare($query);
+            $execute->execute($args);
+
+            $result = $execute->fetchAll(PDO::FETCH_ASSOC);
+            Log::write("CONSULTA REALIZADA CON EXITO","INFO");
+            return $result;
+        }catch (PDOException $e) {
+            Log::write("dao\department\DaoDepartmentImpl", "ERROR");
+            Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+            return array();
+        }
     }
     public function save($entidad):int{
         return 0;
