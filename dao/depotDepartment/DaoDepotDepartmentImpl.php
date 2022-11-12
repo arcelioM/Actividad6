@@ -52,10 +52,10 @@ class DaoDepotDepartmentImpl implements IDaoDepotDepartment{
             return array();
         }
     }
-    public function save($entidad):int{
+    public function save($entidad): ?int{
         return 0;
     }
-    public function update($entidad):int{
+    public function update($entidad): ?int{
         return 0;
     }
 }
