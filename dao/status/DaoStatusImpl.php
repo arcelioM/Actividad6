@@ -54,7 +54,7 @@ class DaoStatusImpl implements IDaoStatus{
 		}
 	}
 
-	public function save($entidad): int{
+	public function save($entidad): ?int{
 
         try{
             Log::write("INICIANDO GUARDADO DE DATOS | ".basename(__FILE__), "INSERT");
@@ -81,7 +81,7 @@ class DaoStatusImpl implements IDaoStatus{
         }
 	}
 
-	public function update($entidad): int{
+	public function update($entidad): ?int{
 		
         try{
 
