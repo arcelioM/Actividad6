@@ -4,6 +4,7 @@ namespace dao\depotProduct;
 
 use dao\depotProduct\IDaoDepotProduct;
 use dao\connection\IConnection;
+use model\DepotProduct;
 use PDOException;
 use util\Log;
 use PDO;
@@ -53,22 +54,42 @@ class DaoDepotProductImpl implements IDaoDepotProduct{
             return array();
         }
     }
-    public function save($entidad):int{
+
+    /**
+     * *METODO SE ENCARGAR DE VALIDAR LA INFORMACION NECESARIA PARA GUARDAR PRODUCTOS EN UN DEPOSITO
+     * @param DepotProduct $entidad : Infoormacion que se guardara
+     * @return null : Devolvera si los datos no estan corrector
+     * @return int 1: Si se hace correctamenta devolvera
+     * @return int: Devolvara el espacio disponible, si la cantidad sobrepasa a este
+     * @return  int 0: Devolvera  si no hay espacio disponible 
+     * 
+     */
+    public function save($entidad): ?int{
 
         try{
             Log::write("INICIO DE INSERCION","INSERT");
-            $result=0;
-            $query = "CALL sp_insert_depot_product(?,?,?,?,?)";
+            $query = "CALL sp_insert_depot_product(@result,?,?,?,?)";
             $execute = $this->connection->getConnection()->prepare($query);
 
-            $execute->bindParam(1,$result,PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT,6);
-            $execute->bindParam(2,$entidad->idProduct,PDO::PARAM_INT,6);
-            $execute->bindParam(3,$entidad->depotDepartment->idDepotDepartment,PDO::PARAM_INT,6);
-            $execute->bindParam(4,$entidad->status->idStatus,PDO::PARAM_INT,6);
-            $execute->bindParam(5,$entidad->quantity,PDO::PARAM_INT,6);
+            $execute->bindParam(1,$entidad->product->idProduct,PDO::PARAM_INT,6);
+            $execute->bindParam(2,$entidad->depotDepartment->idDepotDepartment,PDO::PARAM_INT,6);
+            $execute->bindParam(3,$entidad->status->idStatus,PDO::PARAM_INT,6);
+            $execute->bindParam(4,$entidad->quantity,PDO::PARAM_INT,6);
 
             $execute->execute();
+            $execute->closeCursor();
 
+            $result=$this->connection->getConnection()->query("SELECT @result as result")->fetchAll(PDO::FETCH_ASSOC);
+            $result=$result[0]["result"];
+
+
+            if($result==1){
+                Log::write("INSERCION EXITOSA","INFO");
+            }else{
+                Log::write("INSERCION HA FRACASADO","INFO");
+            }
+
+            
             return $result;
 
         }catch(PDOException $e){
@@ -77,7 +98,68 @@ class DaoDepotProductImpl implements IDaoDepotProduct{
             return null;
         }
     }
-    public function update($entidad):int{
-        return 0;
+    public function update($entidad): ?int{
+
+        try{
+
+            Log::write("INICIO DE ACTUALIZACION","UPDATE");
+            $query = "UPDATE depotproduct SET idProduct=?, idDepotDepartment=?,idStatus=?,quantity=? WHERE ID_DEPOT_PRODUCT=?";
+            $args=array(
+                $entidad->product->idProduct,
+                $entidad->depotDepartment->idDepotDepartment,
+                $entidad->status->idStatus,
+                $entidad->quantity,
+                $entidad->idDepotProduct
+            );
+
+            $execute = $this->connection->getConnection()->prepare($query);
+
+            
+            $resultRowAffect=$execute->execute($args);
+            if($resultRowAffect){
+                Log::write("REGISTRO ACTUALIZADO CORRECTAMENTE","INFO");
+                return 1;
+            }else{
+                Log::write("FALLO DE ACTUALIZACION", "ERROR");
+                return 0;
+            }
+
+        }catch(PDOException $e){
+            Log::write("dao\depotProduct\DaoDepotProductImpl", "ERROR");
+            Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+            return null;
+        }
+
+        
+    }
+
+    public function changeStatus(DepotProduct $entidad): ?int{
+        
+        try{
+
+            Log::write("INICIO DE ACTUALIZACION","UPDATE");
+            $query = "UPDATE depotproduct SET idStatus=? WHERE ID_DEPOT_PRODUCT=?";
+            $args=array(
+                $entidad->status->idStatus,
+                $entidad->idDepotProduct
+            );
+
+            $execute = $this->connection->getConnection()->prepare($query);
+
+            
+            $resultRowAffect=$execute->execute($args);
+            if($resultRowAffect){
+                Log::write("REGISTRO ACTUALIZADO CORRECTAMENTE","INFO");
+                return 1;
+            }else{
+                Log::write("FALLO DE ACTUALIZACION", "ERROR");
+                return 0;
+            }
+
+        }catch(PDOException $e){
+            Log::write("dao\depotProduct\DaoDepotProductImpl", "ERROR");
+            Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+            return null;
+        }
     }
 }
