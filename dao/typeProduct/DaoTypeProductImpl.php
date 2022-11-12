@@ -4,6 +4,7 @@ namespace dao\typeProduct;
 
 use dao\connection\IConnection;
 use dao\typeProduct\IDaoTypeProduct;
+use model\TypeProduct;
 use PDOException;
 use util\Log;
 use PDO;
@@ -114,5 +115,35 @@ class DaoTypeProductImpl implements IDaoTypeProduct{
 			return 0;
         }
 	}
+
+    public function changeStatus(TypeProduct $entidad): ?int{
+
+        try{
+
+            Log::write("ACTUALIZACION DE STATUS | ".basename(__FILE__),"UPDATE");
+            $query = "UPDATE typeproduct SET idStatus=? WHERE ID_TYPE_PRODUCT = ?";
+            $args = array(
+                $entidad->status->idStatus,
+                $entidad->idTypeProduct
+            );
+            $execute = $this->connection->getConnection()->prepare($query);
+            $rowAffected = $execute->execute($args);
+
+            if($rowAffected){
+                Log::write("REGISTRO ACTUALIZADO CORRECTAMENTE","INFO");
+                return 1;
+            }else{
+                Log::write("FALLO DE ACTUALIZACION", "ERROR");
+            }
+
+            Log::write("FIN DE OPERACION DE ACTUALIZACION","INFO");
+            return 0;
+
+        }catch(PDOException $e){
+            Log::write("dao\typeproduct\DaoTypeProductImpl", "ERROR");
+			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+			return 0;
+        }
+    }
 
 }
