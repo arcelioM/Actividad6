@@ -41,7 +41,7 @@ class Connection implements IConnection{
     /**
      * *SE ENCARGAR DE CREAR UNA NUEVA CONEXION A BASE DE DATOS
      */
-    private function createConnection():PDO
+    private function createConnection(): ?PDO
     {
         try{
             Log::write("CREANDO CONEXION","CREANDO");
