@@ -6,19 +6,19 @@ use model\Status;
 use model\DepotDepartment;
 use model\Product;
 class DepotProduct{
-    private int $idDepotProduct;
+    private ?int $idDepotProduct;
 
-    private Product $product;
+    private ?Product $product;
 
-    private DepotDepartment $depotDepartment;
+    private ?DepotDepartment $depotDepartment;
 
-    private Status $status;
+    private ?Status $status;
 
-    private int $quantity;
+    private ?int $quantity;
 
     private $creationDate;
 
-    public function __construct(int $idDepotProduct, $product, $depotDepartment, $status, $quantity, $creationDate)
+    public function __construct(int $idDepotProduct=null, Product $product=null,DepotDepartment $depotDepartment=null,Status $status=null, $quantity=0, $creationDate=null)
     {
         $this->idDepotProduct = $idDepotProduct;
         $this->product = $product;
@@ -28,7 +28,7 @@ class DepotProduct{
         $this->creationDate = $creationDate;
     }
 
-    public function __get($name){
+    public function &__get($name){
         if(property_exists($this,$name)){
            return $this->$name;
         }

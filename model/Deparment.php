@@ -2,18 +2,16 @@
 
 namespace model;
 
-use DateTime;
-
 class Deparment{
-    private int $idDepartment;
+    private ?int $idDepartment;
 
-    private String $name;
+    private ?String $name;
 
-    private Status $status;
+    private ?Status $status;
 
     private  $creationDate;
 
-    public function __construct(int $idDepartment, String $name,Status $status, $creationDate)
+    public function __construct(int $idDepartment=0, String $name="",Status $status=null, $creationDate=null)
     {
         $this->idDepartment = $idDepartment;
         $this->name = $name;
@@ -21,7 +19,7 @@ class Deparment{
         $this->creationDate = $creationDate;
     }
 
-    public function __get($name){
+    public function &__get($name){
         if(property_exists($this,$name)){
            return $this->$name;
         }

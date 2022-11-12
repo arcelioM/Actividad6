@@ -4,15 +4,15 @@ namespace model;
 
 use model\Status;
 class TypeProduct{
-    private int $idTypeProduct;
+    private ?int $idTypeProduct;
 
-    private String $name;
+    private ?String $name;
 
-    private Status $status;
+    private ?Status $status;
 
     private $creationDate;
 
-    public function __construct(int $idTypeProduct, String $name,Status $status, $creationDate)
+    public function __construct(int $idTypeProduct=0, String $name="",Status $status=null, $creationDate=null)
     {
         $this->idTypeProduct = $idTypeProduct;
         $this->name = $name;
@@ -20,5 +20,16 @@ class TypeProduct{
         $this->creationDate = $creationDate;
     }
 
+    public function &__get($name){
+      if(property_exists($this,$name)){
+         return $this->$name;
+      }
+   }
+
+   public function __set($name,$value){
+      if(property_exists($this,$name)){
+         return $this->$name=$value;
+      }
+   }
 
 }

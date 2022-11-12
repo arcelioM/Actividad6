@@ -7,19 +7,19 @@ use model\Deparment;
 use model\Depot;
 
 class DepotDepartment{
-    private int $idDepotDepartment;
+    private ?int $idDepotDepartment;
 
-    private Depot $depot;
+    private ?Depot $depot;
 
-    private Deparment $deparment;
+    private ?Deparment $deparment;
 
-    private int $maxCapacity;
+    private ?int $maxCapacity;
 
     private $creationDate;
 
-    private Status $status;
+    private ?Status $status;
 
-    public function __construct(int $idDepotDepartment,Depot $depot,Deparment $deparment,int $maxCapacity, $creationDate,Status $status)
+    public function __construct(int $idDepotDepartment=0,Depot $depot=null,Deparment $deparment=null,int $maxCapacity=0, $creationDate=null,Status $status=null)
     {
         $this->idDepotDepartment = $idDepotDepartment;
         $this->depot = $depot;
@@ -29,7 +29,7 @@ class DepotDepartment{
         $this->status = $status;
     }
 
-    public function __get($name){
+    public function &__get($name){
         if(property_exists($this,$name)){
            return $this->$name;
         }

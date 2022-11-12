@@ -3,17 +3,17 @@
 namespace model;
 
 class Status{
-    private int $idStatus;
+    private ?int $idStatus;
 
-    private String $name;
+    private ?String $name;
 
-    public function __construct(int $idStatus, String $name)
+    public function __construct(int $idStatus=0, String $name="")
     {
         $this->idStatus = $idStatus;
         $this->name = $name;
     }
 
-    public function __get($name){
+    public function &__get($name){
         if(property_exists($this,$name)){
            return $this->$name;
         }
