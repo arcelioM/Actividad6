@@ -54,7 +54,28 @@ class DaoDepotProductImpl implements IDaoDepotProduct{
         }
     }
     public function save($entidad):int{
-        return 0;
+
+        try{
+            Log::write("INICIO DE INSERCION","INSERT");
+            $result=0;
+            $query = "CALL sp_insert_depot_product(?,?,?,?,?)";
+            $execute = $this->connection->getConnection()->prepare($query);
+
+            $execute->bindParam(1,$result,PDO::PARAM_INT|PDO::PARAM_INPUT_OUTPUT,6);
+            $execute->bindParam(2,$entidad->idProduct,PDO::PARAM_INT,6);
+            $execute->bindParam(3,$entidad->depotDepartment->idDepotDepartment,PDO::PARAM_INT,6);
+            $execute->bindParam(4,$entidad->status->idStatus,PDO::PARAM_INT,6);
+            $execute->bindParam(5,$entidad->quantity,PDO::PARAM_INT,6);
+
+            $execute->execute();
+
+            return $result;
+
+        }catch(PDOException $e){
+            Log::write("dao\depotProduct\DaoDepotProductImpl", "ERROR");
+            Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+            return null;
+        }
     }
     public function update($entidad):int{
         return 0;
