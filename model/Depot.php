@@ -2,6 +2,7 @@
 
 namespace model;
 
+use model\Status;
 class Depot{
     private int $idDepot;
 
