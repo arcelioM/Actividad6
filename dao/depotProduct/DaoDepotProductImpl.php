@@ -137,7 +137,7 @@ class DaoDepotProductImpl implements IDaoDepotProduct{
         
         try{
 
-            Log::write("INICIO DE ACTUALIZACION","UPDATE");
+            Log::write("INICIO DE ACTUALIZACION STATUS","UPDATE");
             $query = "UPDATE depotproduct SET idStatus=? WHERE ID_DEPOT_PRODUCT=?";
             $args=array(
                 $entidad->status->idStatus,
