@@ -61,8 +61,7 @@ class DaoDepartmentImpl implements IDaoDepartment{
             $query = "INSERT INTO deparment (name,idStatus) VALUES(?,?)";
             $args = array(
                 $entidad->name,
-                $entidad->status->idStatus,
-                $entidad->idDepartment
+                $entidad->status->idStatus
             );
 
             $execute = $this->connection->getConnection()->prepare($query);
