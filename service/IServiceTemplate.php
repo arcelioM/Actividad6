@@ -4,8 +4,8 @@ namespace service;
 
 interface IServiceTemplate{
 
-    public function getAll();
-    public function getByID($id);
-    public function save($entidad):int;
-    public function update($entidad):int;
+    public function getAll(): ?array;
+    public function getByID($id): array;
+    public function save($entidad): array;
+    public function update($entidad): array;
 }
