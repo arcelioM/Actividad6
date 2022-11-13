@@ -39,7 +39,7 @@ class DaoStatusImpl implements IDaoStatus{
 		
 		try{
             Log::write("INICIANDO BUSQUEDA POR ID | ".__NAMESPACE__." | ".basename(__FILE__),"SELECT");
-			$query = "SELECT ID_STATUS,name from product WHERE ID_STATUS=?";
+			$query = "SELECT ID_STATUS,name from status WHERE ID_STATUS=?";
 			$args=array($id);
 			$execute=$this->connection->getConnection()->prepare($query);
 			$execute->execute($args);
