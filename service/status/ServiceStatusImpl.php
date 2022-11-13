@@ -93,7 +93,7 @@ class ServiceStatusImpl implements IServiceStatus{
     }
 
     /**
-     * @param  array $entidad Array con la informacion necesaria para actualizar datos depot
+     * @param  array $entidad Array con la informacion necesaria para actualizar datos status
      * @return int 1  actualizacion es exitosa
      * @return int 0  fallo de actualizacion
      */
