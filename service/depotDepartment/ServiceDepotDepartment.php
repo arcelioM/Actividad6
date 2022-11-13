@@ -62,7 +62,7 @@ class ServiceDepotDepartment implements IServiceDepotDepartment{
         }
 
         $depotDepartmentReturn = array(
-            "Info"=>"Status",
+            "Info"=>"DepotDepartment",
             "values"=>$depotDepartmentOne
         );
 
