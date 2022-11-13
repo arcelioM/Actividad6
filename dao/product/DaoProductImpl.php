@@ -4,6 +4,8 @@ namespace dao\product;
 
 use dao\connection\IConnection;
 use dao\product\IDaoProduct;
+use model\DepotProduct;
+use model\Product;
 use PDOException;
 use util\Log;
 use PDO;
@@ -82,7 +84,7 @@ class DaoProductImpl implements IDaoProduct
             return 0;
             
         }catch(PDOException $e){
-            Log::write("dao\status\DaoStatusImpl", "ERROR");
+            Log::write("dao\product\DaoProductImpl", "ERROR");
 			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
 			return 0;
         }
@@ -116,9 +118,41 @@ class DaoProductImpl implements IDaoProduct
             return 0;
 
         }catch(PDOException $e){
-            Log::write("dao\status\DaoStatusImpl", "ERROR");
+            Log::write("dao\product\DaoProductImpl", "ERROR");
 			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
 			return 0;
         }
 	}
+
+	public function changeStatus(Product $entidad): ?int{
+
+		try{
+
+            Log::write("ACTUALIZACION DE DATOS PRODUCT STATUS | ".basename(__FILE__),"UPDATE");
+            $query = "UPDATE product SET idStatus=? WHERE ID_PRODUCT = ?";
+            $args = array(
+				$entidad->status->idStatus,
+				$entidad->idProduct
+			);
+            $execute = $this->connection->getConnection()->prepare($query);
+            $rowAffected = $execute->execute($args);
+
+            if($rowAffected){
+                Log::write("REGISTRO ACTUALIZADO CORRECTAMENTE","INFO");
+                return 1;
+            }else{
+                Log::write("FALLO DE ACTUALIZACION", "ERROR");
+            }
+
+            Log::write("FIN DE OPERACION DE ACTUALIZACION","INFO");
+            return 0;
+
+        }catch(PDOException $e){
+            Log::write("dao\product\DaoProductImpl", "ERROR");
+			Log::write("ARCHIVO: " . $e->getFile() . " | lINEA DE ERROR: " . $e->getLine() . " | MENSAJE" . $e->getMessage(), "ERROR");
+			return 0;
+        }
+	}
+
+
 }
