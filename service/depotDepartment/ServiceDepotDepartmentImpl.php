@@ -9,7 +9,7 @@ use model\DepotDepartment;
 use model\Status;
 use service\depotDepartment\IServiceDepotDepartment;
 
-class ServiceDepotDepartment implements IServiceDepotDepartment{
+class ServiceDepotDepartmentImpl implements IServiceDepotDepartment{
 
 
     private IDaoDepotDepartment $dao;

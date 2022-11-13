@@ -7,7 +7,7 @@ use model\Product;
 use model\Status;
 use model\TypeProduct;
 use service\product\IServiceProduct;
-class ServiceProduct implements IServiceProduct{
+class ServiceProductImpl implements IServiceProduct{
 
     private IDaoProduct $dao;
 

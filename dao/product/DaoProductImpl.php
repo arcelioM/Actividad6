@@ -4,7 +4,6 @@ namespace dao\product;
 
 use dao\connection\IConnection;
 use dao\product\IDaoProduct;
-use model\DepotProduct;
 use model\Product;
 use PDOException;
 use util\Log;
@@ -22,7 +21,7 @@ class DaoProductImpl implements IDaoProduct
 	{
 		try {
 			Log::write("INICIANDO CONSULTA DE PRODUCTOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,idStatus from product order by ID_PRODUCT desc";
+			$query = "SELECT ID_PRODUCT,name,idTypeProduct,price,experationDate,creationDate,idStatus from product order by ID_PRODUCT desc";
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
 
@@ -41,7 +40,7 @@ class DaoProductImpl implements IDaoProduct
 	public function getByID($id){
 		Log::write("Iniciando busqueda | ".__NAMESPACE__." | ".basename(__FILE__),"SELECT");
 		try{
-			$query = "SELECT name,idTypeProduct,price,experationDate,creationDate,idStatus from product WHERE ID_PRODUCT=?";
+			$query = "SELECT ID_PRODUCT,name,idTypeProduct,price,experationDate,creationDate,idStatus from product WHERE ID_PRODUCT=?";
 			$args=array($id);
 			$execute=$this->connection->getConnection()->prepare($query);
 			$execute->execute($args);

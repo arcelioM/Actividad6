@@ -9,7 +9,7 @@ use model\Product;
 use model\Status;
 use service\depotProduct\IServiceDepotProduct;
 
-class ServiceDepotProduct implements IServiceDepotProduct{
+class ServiceDepotProductImpl implements IServiceDepotProduct{
 
 
     private IDaoDepotProduct $dao;

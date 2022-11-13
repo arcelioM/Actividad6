@@ -6,7 +6,7 @@ use dao\department\IDaoDepartment;
 use model\Deparment;
 use model\Status;
 
-class ServiceDepartment implements IServiceDepartment{
+class ServiceDepartmentImpl implements IServiceDepartment{
     private IDaoDepartment $IDaoDepartment;
 
     public function __construct(IDaoDepartment $IDaoDepartment){
