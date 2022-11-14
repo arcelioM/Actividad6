@@ -65,7 +65,7 @@
                 "idDepotDepartment"=>"xsd:integer",
                 "quantity"=>"xsd:integer",
                 "idStatus"=>"xsd:integer"
-            ),  // inputs
+            ), 
             array("return"=>"xsd:string"), 
             'urn:depotProduct',  
             'urn:depotProduct#save'
