@@ -23,7 +23,7 @@ class DaoDepotProductImpl implements IDaoDepotProduct{
 
         try {
             Log::write("INICIO DE CONSULTA DE BUSQUEDA | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-            $query = "SELECT ID_DEPOT_PRODUCT,idProduct,idDepotDepartment,quantity,idStatus,creationDate FROM depotproduct ORDER BY ID_DEPOT_PRODUCT DESC";
+            $query = "SELECT ID_DEPOT_PRODUCT,idProduct,idDepotDepartment,quantity,idStatus,creationDate FROM depotproduct ORDER BY ID_DEPOT_PRODUCT ASC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
             $result = $execute->fetchAll(PDO::FETCH_ASSOC);

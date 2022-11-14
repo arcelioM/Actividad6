@@ -21,7 +21,7 @@ class DaoProductImpl implements IDaoProduct
 	{
 		try {
 			Log::write("INICIANDO CONSULTA DE PRODUCTOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT ID_PRODUCT,name,idTypeProduct,price,experationDate,creationDate,idStatus from product order by ID_PRODUCT desc";
+			$query = "SELECT ID_PRODUCT,name,idTypeProduct,price,experationDate,creationDate,idStatus from product order by ID_PRODUCT ASC";
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
 
