@@ -5,28 +5,45 @@
     use dao\depotProduct\DaoDepotProductImpl;
     use service\depotProduct\ServiceDepotProductImpl;
 
-     $con = Connection::getInstance();
-     $dao = new DaoDepotProductImpl( $con);
+    $con = Connection::getInstance();
+    $dao = new DaoDepotProductImpl( $con);
     $service =  new ServiceDepotProductImpl($dao);
 
-    $server = new nusoap_server(); // Create a instance for nusoap server
+    $server = new nusoap_server(); # Creando Instancia de NuSoap
+    $server->configureWSDL("DepotProduct","urn:depotProduct"); # Configuracion de archivo WSDL
 
-        #const  CONNECTION = Connection::getInstance();
-        #const DAO = new DaoDepotProductImpl(ControllerDepotProductImpl::CONNECTION);
-        #const SERVICE = new ServiceDepotProductImpl($dao);
         function getAll(){
             global $service;
             
             return json_encode($service->getAll());
         }
 
+        $server->register(
+            "getAll", 
+            array(), 
+            array("return"=>"xsd:string"), 
+            'urn:depotProduct',   
+            'urn:depotProduct#getAll' 
+        );
+
+        #----------------------------------------------
+
         function getById($id):String{
             global $service;
-            #Log::write(json_encode($service->getByID($id)),"RESPONSE");
             
             return json_encode($service->getByID($id));
             
         }
+
+        $server->register(
+            "getById", # nombre de funcion
+            array("id"=>"xsd:integer"),  # valores de entrada
+            array("return"=>"xsd:string"), // valores para retorno
+            'urn:depotProduct',   #nameSpace
+            'urn:depotProduct#getById' #SoapAction
+        );
+
+        #-----------------------------------------------------------------------
 
         function save($idProduct,$idDepotDepartment,$quantity,$idStatus){
             global $service;
@@ -41,37 +58,20 @@
             return json_encode($service->save($entidad));
         }
 
-    $server->configureWSDL("DepotProduct","urn:depotProduct"); // Configure WSDL file
-
-    
-    $server->register(
-        "getById", // name of function
-        array("id"=>"xsd:integer"),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:depotProduct',   //namespace
-        'urn:depotProduct#getById' //soapaction
-    );
-
-    $server->register(
-        "getAll", // name of function
-        array(),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:depotProduct',   //namespace
-        'urn:depotProduct#getAll' //soapaction
-    );
-
-    $server->register(
-        "save", // name of function
-        array(
-            "idProduct"=>"xsd:integer",
-            "idDepotDepartment"=>"xsd:integer",
-            "quantity"=>"xsd:integer",
-            "idStatus"=>"xsd:integer"
-        ),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:depotProduct',   //namespace
-        'urn:depotProduct#save' //soapaction
-    );
+        $server->register(
+            "save", 
+            array(
+                "idProduct"=>"xsd:integer",
+                "idDepotDepartment"=>"xsd:integer",
+                "quantity"=>"xsd:integer",
+                "idStatus"=>"xsd:integer"
+            ),  // inputs
+            array("return"=>"xsd:string"), 
+            'urn:depotProduct',  
+            'urn:depotProduct#save'
+        );
+        #------------------------------------------------------
+        
     
     $server->service(file_get_contents("php://input"));
 ?>
