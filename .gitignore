@@ -12,5 +12,7 @@ log.txt
 .vscode
 .env
 
+#Bower
+bower_components
 #ARCHIVO DE PRUEBA
 index.php

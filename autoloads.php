@@ -7,7 +7,6 @@
     function autLoads(String $class):void{
 
         $url= "".str_replace("\\","/",$class.".php"); 
-        //echo "$url <br/>";
         //if(file_exists(($url))){
             require_once($url);
         //}else{
