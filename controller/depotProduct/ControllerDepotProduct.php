@@ -4,7 +4,6 @@
     use dao\connection\Connection;
     use dao\depotProduct\DaoDepotProductImpl;
     use service\depotProduct\ServiceDepotProductImpl;
-use util\Log;
 
      $con = Connection::getInstance();
      $dao = new DaoDepotProductImpl( $con);
@@ -16,14 +15,12 @@ use util\Log;
         #const DAO = new DaoDepotProductImpl(ControllerDepotProductImpl::CONNECTION);
         #const SERVICE = new ServiceDepotProductImpl($dao);
         function getAll(){
-            Log::write("getAll","Controller");
             global $service;
             
             return json_encode($service->getAll());
         }
 
         function getById($id):String{
-            Log::write("getById","Controller");
             global $service;
             #Log::write(json_encode($service->getByID($id)),"RESPONSE");
             
@@ -44,7 +41,7 @@ use util\Log;
             return json_encode($service->save($entidad));
         }
 
-    $server->configureWSDL("DepotProduct","urn:soapdemo"); // Configure WSDL file
+    $server->configureWSDL("DepotProduct","urn:depotProduct"); // Configure WSDL file
 
     
     $server->register(
@@ -61,6 +58,19 @@ use util\Log;
         array("return"=>"xsd:string"), // outputs
         'urn:depotProduct',   //namespace
         'urn:depotProduct#getAll' //soapaction
+    );
+
+    $server->register(
+        "save", // name of function
+        array(
+            "idProduct"=>"xsd:integer",
+            "idDepotDepartment"=>"xsd:integer",
+            "quantity"=>"xsd:integer",
+            "idStatus"=>"xsd:integer"
+        ),  // inputs
+        array("return"=>"xsd:string"), // outputs
+        'urn:depotProduct',   //namespace
+        'urn:depotProduct#save' //soapaction
     );
     
     $server->service(file_get_contents("php://input"));
