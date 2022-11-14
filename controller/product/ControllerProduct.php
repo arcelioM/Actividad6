@@ -9,7 +9,8 @@
      $dao = new DaoProductImpl( $con);
     $service =  new ServiceProductImpl($dao);
 
-    $server = new nusoap_server(); // Create a instance for nusoap server
+    $server = new nusoap_server(); 
+    $server->configureWSDL("Product","urn:product");
 
 
         function getAll(){
@@ -18,12 +19,31 @@
             return json_encode($service->getAll());
         }
 
+        $server->register(
+            "getAll", 
+            array(), 
+            array("return"=>"xsd:string"), 
+            'urn:product',  
+            'urn:product#getAll' 
+        );
+
+        #----------------------------------------------------------
+
         function getById($id):String{
             global $service;            
             return json_encode($service->getByID($id));
             
         }
 
+        
+        $server->register(
+            "getById", 
+            array("id"=>"xsd:integer"), 
+            array("return"=>"xsd:string"), 
+            'urn:product',  
+            'urn:product#getById' 
+        );
+        #----------------------------------------------------------------
         function save($name,$idTypeProduct,$price,$experationDate,$idStatus){
             global $service;
 
@@ -38,38 +58,23 @@
             return json_encode($service->save($entidad));
         }
 
-    $server->configureWSDL("Product","urn:product"); // Configure WSDL file
+        $server->register(
+            "save", 
+            array(
+                "name"=>"xsd:string",
+                "idTypeProduct"=>"xsd:integer",
+                "price"=>"xsd:decimal",
+                "experationDate"=>"xsd:string",
+                "idStatus"=>"xsd:integer"
+            ),  
+            array("return"=>"xsd:string"), 
+            'urn:product',   
+            'urn:product#save' 
+        );
 
-    
-    $server->register(
-        "getById", // name of function
-        array("id"=>"xsd:integer"),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:product',   //namespace
-        'urn:product#getById' //soapaction
-    );
+        #-----------------------------------------------------------------
 
-    $server->register(
-        "getAll", // name of function
-        array(),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:product',   //namespace
-        'urn:product#getAll' //soapaction
-    );
-
-    $server->register(
-        "save", // name of function
-        array(
-            "name"=>"xsd:string",
-            "idTypeProduct"=>"xsd:integer",
-            "price"=>"xsd:decimal",
-            "experationDate"=>"xsd:string",
-            "idStatus"=>"xsd:integer"
-        ),  // inputs
-        array("return"=>"xsd:string"), // outputs
-        'urn:product',   //namespace
-        'urn:product#save' //soapaction
-    );
+   
     
     $server->service(file_get_contents("php://input"));
 ?>
