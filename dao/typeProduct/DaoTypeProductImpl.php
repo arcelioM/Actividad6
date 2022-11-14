@@ -23,7 +23,7 @@ class DaoTypeProductImpl implements IDaoTypeProduct{
 
         try {
             Log::write("INCIANDO CONSULTA DE TYPO PRODUCTO | ".__NAMESPACE__." | ".basename(__FILE__),"SELECT");
-            $query = "SELECT ID_TYPE_PRODUCT,name,idStatus,creationDate FROM typeProduct ORDER BY ID_TYPE_PRODUCT DESC";
+            $query = "SELECT ID_TYPE_PRODUCT,name,idStatus,creationDate FROM typeProduct ORDER BY ID_TYPE_PRODUCT ASC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
             $result = $execute->fetchAll(PDO::FETCH_ASSOC);

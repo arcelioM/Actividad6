@@ -21,7 +21,7 @@ class DaoDepotImpl implements IDaoDepot
     {
         try {
             Log::write("INICIO DE CONSULTA DE BUSQUEDA | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-            $query = "SELECT ID_DEPOT,branchName,location,idStatus FROM depot ORDER BY ID_DEPOT DESC";
+            $query = "SELECT ID_DEPOT,branchName,location,idStatus FROM depot ORDER BY ID_DEPOT ASC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
             $result = $execute->fetchAll(PDO::FETCH_ASSOC);

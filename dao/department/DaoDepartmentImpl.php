@@ -22,7 +22,7 @@ class DaoDepartmentImpl implements IDaoDepartment{
 
         try {
             Log::write("INICIO DE CONSULTA DE BUSQUEDA | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-            $query = "SELECT ID_DEPARTMENT,name,idStatus,creationDate FROM deparment ORDER BY ID_DEPARTMENT DESC";
+            $query = "SELECT ID_DEPARTMENT,name,idStatus,creationDate FROM deparment ORDER BY ID_DEPARTMENT ASC";
             $execute = $this->connection->getConnection()->prepare($query);
             $execute->execute();
             $result = $execute->fetchAll(PDO::FETCH_ASSOC);

@@ -19,7 +19,7 @@ class DaoStatusImpl implements IDaoStatus{
 	{
 		try {
 			Log::write("INICIANDO CONSULTA DE PRODUCTOS | ".__NAMESPACE__." | ".basename(__FILE__), "SELECT");
-			$query = "SELECT ID_STATUS,name from status order by ID_STATUS desc";
+			$query = "SELECT ID_STATUS,name from status order by ID_STATUS ASC";
 			$execute = $this->connection->getConnection()->prepare($query);
 			$execute->execute();
 
