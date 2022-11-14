@@ -20,11 +20,11 @@
         }
 
         $server->register(
-            "getAll", // name of function
-            array(),  // inputs
-            array("return"=>"xsd:string"), // outputs
-            'urn:typeProduct',   //namespace
-            'urn:typeProduct#getAll' //soapaction
+            "getAll", 
+            array(),
+            array("return"=>"xsd:string"), 
+            'urn:typeProduct', 
+            'urn:typeProduct#getAll' 
         );
 
         #------------------------------------------------------------
